@@ -36,6 +36,26 @@ header .count { color: #64748b; font-size: 14px; }
 .filters button:hover { border-color: #93c5fd; }
 .filters button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
 
+/* ===== 搜索框 ===== */
+.search {
+  width: 100%;
+  height: 48px;
+  padding: 0 20px 0 48px;
+  margin-bottom: 20px;
+  font-family: inherit;
+  font-size: 15px;
+  color: #1f2937;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.6-3.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 18px center;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+}
+.search::placeholder { color: #94a3b8; }
+.search:hover { border-color: #cbd5e1; }
+.search:focus { outline: none; border-color: #93c5fd; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+
 /* ===== 商品卡片网格 ===== */
 .grid {
   display: grid;
@@ -146,4 +166,114 @@ header .fav-filter.on {
 @media (max-width: 640px) {
   .detail { grid-template-columns: 1fr; }
   .detail-thumb { height: 220px; font-size: 100px; }
+}
+
+/* ===== 顶部导航（桌面端）===== */
+.topnav { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.nav-link {
+  padding: 8px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  color: #475569;
+  font-size: 14px;
+  text-decoration: none;
+}
+.nav-link:hover { border-color: #93c5fd; color: #2563eb; }
+header .topnav + .fav-filter { margin-left: 12px; }
+
+/* ===== 底部标签栏（手机端）===== */
+.tabbar { display: none; }
+
+/* ===== 收藏列表 ===== */
+#favList { display: flex; flex-direction: column; gap: 12px; }
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+.cart-thumb {
+  width: 64px; height: 64px;
+  flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+.cart-info { flex: 1; min-width: 0; }
+.cart-title {
+  display: block;
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cart-meta { margin-top: 4px; font-size: 12px; color: #94a3b8; }
+.cart-price { color: #ef4444; font-weight: 700; }
+.cart-price::before { content: "¥"; font-size: 12px; }
+.cart-remove {
+  border: none; background: none;
+  color: #94a3b8; font-size: 13px; cursor: pointer;
+}
+.cart-remove:hover { color: #ef4444; }
+.empty-link { display: inline-block; margin-top: 12px; color: #2563eb; font-size: 14px; }
+
+/* ===== 个人主页 ===== */
+.profile-head {
+  display: flex; align-items: center; gap: 16px;
+  margin: 4px 0 16px;
+}
+.avatar {
+  width: 64px; height: 64px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 600;
+  color: #2563eb; background: #eff6ff; border-radius: 50%;
+}
+.p-name { margin: 0; font-size: 18px; font-weight: 600; }
+
+/* 标签：点了只换下面的内容，不跳页面 */
+.tabs { display: flex; gap: 12px; margin-bottom: 16px; }
+.tab-btn {
+  flex: 1;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #475569;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tab-btn:hover { border-color: #93c5fd; }
+.tab-btn.active { color: #2563eb; background: #eff6ff; border-color: #bfdbfe; font-weight: 600; }
+
+/* 内容区 */
+.panel { padding: 12px; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; }
+.panel .cart-row { padding: 12px 8px; border: none; border-radius: 8px; }
+.panel .cart-row + .cart-row { border-top: 1px solid #f1f5f9; }
+
+@media (max-width: 640px) {
+  .topnav { display: none; }
+  header .topnav + .fav-filter { margin-left: auto; }
+  body { padding-bottom: 80px; }
+  .tabbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0;
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    z-index: 10;
+  }
+  .tabbar .tab {
+    flex: 1; text-align: center;
+    font-size: 12px; color: #64748b; text-decoration: none;
+  }
+  .tabbar .tab.active { color: #2563eb; font-weight: 600; }
 }

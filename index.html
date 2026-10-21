@@ -11,8 +11,13 @@
   <header>
     <h1>校园集市</h1>
     <span class="count" id="count">共 0 件</span>
+    <nav class="topnav">
+      <a href="profile.html" class="nav-link">我的</a>
+    </nav>
     <button class="fav-filter" id="favFilter">只看收藏</button>
   </header>
+
+  <input id="search" class="search" type="search" placeholder="搜索商品，例如：高数、键盘" aria-label="搜索商品">
 
   <div class="filters" id="filters">
     <button class="active" data-cat="全部">全部</button>
@@ -24,6 +29,11 @@
   </div>
 
   <div class="grid" id="grid"></div>
+
+  <nav class="tabbar">
+    <a href="index.html" class="tab active">首页</a>
+    <a href="profile.html" class="tab">我的</a>
+  </nav>
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>

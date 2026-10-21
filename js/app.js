@@ -17,11 +17,17 @@ function toggleFav(id) {
 }
 
 // ===== 筛选逻辑 =====
+// 标题和别名一起匹配（"高数"能命中"高等数学"），输入不区分大小写
+function matchKeyword(it, kw) {
+  const text = (it.title + ' ' + (it.keywords || '')).toLowerCase();
+  return text.includes(kw);
+}
+
 function getFiltered() {
   return items.filter(it => {
     if (state.category !== '全部' && it.category !== state.category) return false;
     if (state.onlyFav && !isFav(it.id)) return false;
-    if (state.keyword && !it.title.includes(state.keyword)) return false;
+    if (state.keyword && !matchKeyword(it, state.keyword)) return false;
     return true;
   });
 }
@@ -59,6 +65,8 @@ function render() {
 
 function clearAll() {
   state = { category: '全部', onlyFav: false, keyword: '' };
+  const search = document.getElementById('search');
+  if (search) search.value = '';
   document.querySelectorAll('#filters button').forEach(b => {
     b.classList.toggle('active', b.dataset.cat === '全部');
   });
@@ -75,6 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
       render();
     });
+  });
+
+  document.getElementById('search').addEventListener('input', (e) => {
+    state.keyword = e.target.value.trim().toLowerCase();
+    render();
   });
 
   document.getElementById('favFilter').addEventListener('click', (e) => {

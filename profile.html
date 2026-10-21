@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>我的 · 校园集市</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back">← 返回列表</a>
+    <h1>我的</h1>
+    <nav class="topnav">
+      <a href="profile.html" class="nav-link">我的</a>
+    </nav>
+  </header>
+
+  <div class="profile-head">
+    <div class="avatar">郭</div>
+    <p class="p-name">郭　驰</p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="fav" role="tab" aria-selected="true" aria-controls="panel-fav">收藏</button>
+    <button class="tab-btn" data-tab="history" role="tab" aria-selected="false" aria-controls="panel-history">浏览记录</button>
+  </div>
+
+  <div class="panel" id="panel-fav" role="tabpanel">
+    <div id="favList"></div>
+  </div>
+
+  <div class="panel" id="panel-history" role="tabpanel" hidden>
+    <div id="historyList"></div>
+  </div>
+
+  <nav class="tabbar">
+    <a href="index.html" class="tab">首页</a>
+    <a href="profile.html" class="tab active">我的</a>
+  </nav>
+
+  <script src="js/data.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

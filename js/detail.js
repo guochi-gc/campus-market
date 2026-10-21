@@ -31,6 +31,8 @@ function render() {
     return;
   }
 
+  recordHistory(it.id);
+
   box.innerHTML = `
     <div class="detail">
       <div class="detail-thumb">${it.emoji}</div>
@@ -56,3 +58,10 @@ function render() {
 }
 
 document.addEventListener('DOMContentLoaded', render);
+
+// 记一条浏览记录：最近看的排前面，同一个商品不重复，最多留 20 条
+function recordHistory(id) {
+  const hist = JSON.parse(localStorage.getItem('history') || '[]').filter(x => x !== id);
+  hist.unshift(id);
+  localStorage.setItem('history', JSON.stringify(hist.slice(0, 20)));
+}
