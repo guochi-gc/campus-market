@@ -188,7 +188,7 @@ function render() {
       <span class="cat-tag">${it.major || it.category}</span>
       <button class="fav-btn" onclick="toggleFav(${it.id})" aria-label="收藏 ${esc(it.title)}" aria-pressed="${isFav(it.id)}">${isFav(it.id) ? '★' : '☆'}</button>
       <a href="item.html?id=${it.id}" style="text-decoration:none;color:inherit">
-        <div class="thumb">${it.img ? `<img src="${it.img}" alt="${esc(it.title)}" loading="lazy">` : it.emoji}</div>
+        <div class="thumb" data-cat="${it.category}">${it.img ? `<img src="${it.img}" alt="${esc(it.title)}" loading="lazy">` : it.emoji}</div>
         <div class="info">
           <p class="title">${it.title}</p>
           <div class="price">${it.price}</div>
