@@ -191,7 +191,7 @@ body.scrolled header .count { display: none; }
 /* ===== 主区：筛选框占 1 列 × 2 行，商品绕排 ===== */
 .shop {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
   align-items: start;
 }
