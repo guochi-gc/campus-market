@@ -22,7 +22,7 @@ function switchTab(name) {
 function row(it, actionText, action) {
   return `
     <div class="row-item">
-      <div class="row-thumb">${it.emoji}</div>
+      <div class="row-thumb">${it.img ? `<img src="${it.img}" alt="">` : it.emoji}</div>
       <div class="row-info">
         <a class="row-title" href="item.html?id=${it.id}">${it.title}</a>
         <div class="row-meta">${it.condition} · ${it.location} · ${it.time}</div>

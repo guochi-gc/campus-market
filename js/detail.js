@@ -39,7 +39,7 @@ function render() {
 
   box.innerHTML = `
     <div class="detail">
-      <div class="detail-thumb">${it.emoji}</div>
+      <div class="detail-thumb">${it.img ? `<img src="${it.img}" alt="${it.title}">` : it.emoji}</div>
       <div class="detail-info">
         <h2>${it.title}</h2>
         <div class="price">${it.price}</div>
