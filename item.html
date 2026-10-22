@@ -12,18 +12,28 @@
     <a href="index.html" class="back">← 返回列表</a>
     <h1>商品详情</h1>
     <nav class="topnav">
+      <a href="publish.html" class="nav-link nav-link--primary">＋ 发布</a>
       <a href="profile.html" class="nav-link">我的</a>
     </nav>
   </header>
 
   <div id="detail"></div>
 
+  <div id="relatedWrap" hidden>
+    <h2 class="section-title">同类商品</h2>
+    <div class="grid" id="related"></div>
+  </div>
+
+  <footer>校园集市 · 人机交互课程作业 · 数据保存在本机浏览器</footer>
+
   <nav class="tabbar">
     <a href="index.html" class="tab">首页</a>
+    <a href="publish.html" class="tab">发布</a>
     <a href="profile.html" class="tab">我的</a>
   </nav>
 
   <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/detail.js"></script>
 </body>
 </html>

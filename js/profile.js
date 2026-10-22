@@ -15,45 +15,51 @@ function switchTab(name) {
   });
   document.getElementById('panel-fav').hidden = name !== 'fav';
   document.getElementById('panel-history').hidden = name !== 'history';
+  document.getElementById('panel-posts').hidden = name !== 'posts';
 }
 
-// 列表行：收藏和浏览记录用同一套结构
+// 三个标签共用同一套列表行
 function row(it, actionText, action) {
   return `
-    <div class="cart-row">
-      <div class="cart-thumb">${it.emoji}</div>
-      <div class="cart-info">
-        <a class="cart-title" href="item.html?id=${it.id}">${it.title}</a>
-        <div class="cart-meta">${it.condition} · ${it.location}</div>
+    <div class="row-item">
+      <div class="row-thumb">${it.emoji}</div>
+      <div class="row-info">
+        <a class="row-title" href="item.html?id=${it.id}">${it.title}</a>
+        <div class="row-meta">${it.condition} · ${it.location} · ${it.time}</div>
       </div>
-      <div class="cart-price">${it.price}</div>
-      <button class="cart-remove" onclick="${action}(${it.id})">${actionText}</button>
+      <div class="row-price">${it.price}</div>
+      <button class="row-action" onclick="${action}(${it.id})">${actionText}</button>
     </div>`;
 }
 
-function emptyBox(text) {
+function emptyBox(text, linkText) {
   return `
     <div class="empty">
       <p>${text}</p>
-      <a href="index.html" class="empty-link">去逛逛</a>
+      <a href="index.html" class="empty-link">${linkText || '去逛逛'}</a>
     </div>`;
 }
 
 function renderFavs() {
-  const list = items.filter(it => getFavs().includes(it.id));
-  const box = document.getElementById('favList');
-  box.innerHTML = list.length
+  const list = getAllItems().filter(it => getFavs().includes(it.id));
+  document.getElementById('favList').innerHTML = list.length
     ? list.map(it => row(it, '取消收藏', 'unfav')).join('')
     : emptyBox('还没有收藏任何商品');
 }
 
 function renderHistory() {
   const ids = getHistory();
-  const list = ids.map(id => items.find(it => it.id === id)).filter(Boolean);
-  const box = document.getElementById('historyList');
-  box.innerHTML = list.length
+  const list = ids.map(id => getAllItems().find(it => it.id === id)).filter(Boolean);
+  document.getElementById('historyList').innerHTML = list.length
     ? list.map(it => row(it, '删除记录', 'dropHistory')).join('')
     : emptyBox('还没有浏览记录');
+}
+
+function renderPosts() {
+  const list = getUserPosts();
+  document.getElementById('postList').innerHTML = list.length
+    ? list.map(it => row(it, '下架', 'dropPost')).join('')
+    : emptyBox('还没有发布过商品', '去发布');
 }
 
 function unfav(id) {
@@ -66,10 +72,16 @@ function dropHistory(id) {
   renderHistory();
 }
 
+function dropPost(id) {
+  saveUserPosts(getUserPosts().filter(x => x.id !== id));
+  renderPosts();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
   renderFavs();
   renderHistory();
+  renderPosts();
 });

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>发布闲置 · 校园集市</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back">← 返回列表</a>
+    <h1>发布闲置</h1>
+    <nav class="topnav">
+      <a href="publish.html" class="nav-link nav-link--primary">＋ 发布</a>
+      <a href="profile.html" class="nav-link">我的</a>
+    </nav>
+  </header>
+
+  <form class="form-card" id="publishForm" novalidate>
+    <div class="field">
+      <label for="title">商品名称</label>
+      <input id="title" type="text" maxlength="40" placeholder="例如：大学物理（上册）第七版">
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="price">价格</label>
+        <input id="price" type="number" min="0" step="1" placeholder="单位：元">
+      </div>
+      <div class="field">
+        <label for="category">分类</label>
+        <select id="category">
+          <option>教材</option>
+          <option>数码</option>
+          <option>生活</option>
+          <option>运动</option>
+          <option>其他</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="condition">成色</label>
+        <select id="condition">
+          <option>全新</option>
+          <option>九成新</option>
+          <option>八成新</option>
+          <option>七成新</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="location">交易地点</label>
+        <input id="location" type="text" maxlength="20" placeholder="例如：三教楼">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="desc">补充说明</label>
+      <textarea id="desc" maxlength="120" placeholder="用了几次、有没有笔记、为什么出……"></textarea>
+    </div>
+
+    <div class="field">
+      <label>选个图标</label>
+      <div class="emoji-picker" id="emojiPicker">
+        <button type="button" data-emoji="📚" class="active">📚</button>
+        <button type="button" data-emoji="📖">📖</button>
+        <button type="button" data-emoji="💻">💻</button>
+        <button type="button" data-emoji="🖱️">🖱️</button>
+        <button type="button" data-emoji="⌨️">⌨️</button>
+        <button type="button" data-emoji="💡">💡</button>
+        <button type="button" data-emoji="📦">📦</button>
+        <button type="button" data-emoji="🏀">🏀</button>
+        <button type="button" data-emoji="🚲">🚲</button>
+      </div>
+    </div>
+
+    <p class="form-error" id="formError" hidden></p>
+    <button type="submit" class="submit-btn">发布</button>
+  </form>
+
+  <footer>校园集市 · 人机交互课程作业 · 数据保存在本机浏览器</footer>
+
+  <nav class="tabbar">
+    <a href="index.html" class="tab">首页</a>
+    <a href="publish.html" class="tab active">发布</a>
+    <a href="profile.html" class="tab">我的</a>
+  </nav>
+
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/publish.js"></script>
+</body>
+</html>
