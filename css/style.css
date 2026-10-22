@@ -162,6 +162,68 @@ header .fav-filter.on { background: var(--blue); color: #fff; border-color: var(
 .sort button:hover { border-color: #93c5fd; color: var(--blue); }
 .sort button.active { background: var(--blue-soft); border-color: #bfdbfe; color: var(--blue); font-weight: 600; }
 
+/* ===== 学院 / 专业 二级筛选 ===== */
+.layout { display: grid; grid-template-columns: 208px 1fr; gap: 26px; align-items: start; }
+.side { position: sticky; top: 16px; }
+.side-block {
+  padding: 14px 12px;
+  margin-bottom: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.side-block h3 {
+  margin: 0 0 10px;
+  padding-left: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--faint);
+  letter-spacing: 1px;
+}
+.side-list { list-style: none; margin: 0; padding: 0; }
+.side-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+.side-list button:hover { background: #f1f5f9; }
+.side-list button.active { background: var(--blue-soft); color: var(--blue); font-weight: 600; }
+.side-list .n { color: var(--faint); font-size: 12px; }
+.side-list button.active .n { color: var(--blue); }
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.crumb button {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--blue);
+  cursor: pointer;
+}
+.crumb button:hover { text-decoration: underline; }
+.crumb .cur { color: var(--ink); font-weight: 600; }
+.crumb .sep { color: var(--faint); }
+
 /* ===== 商品卡片网格 ===== */
 .grid {
   display: grid;
@@ -441,6 +503,21 @@ footer {
   .detail-thumb { height: 220px; font-size: 100px; }
   .field-row { grid-template-columns: 1fr; }
   .form-card { padding: 20px; }
+
+  .layout { grid-template-columns: 1fr; gap: 14px; }
+  .side { position: static; display: flex; gap: 10px; overflow-x: auto; padding-bottom: 2px; }
+  .side-block { flex: none; margin: 0; padding: 6px; border-radius: 12px; }
+  .side-block h3 { display: none; }
+  .side-list { display: flex; gap: 6px; }
+  .side-list button {
+    width: auto;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  .side-list .n { margin-left: 6px; }
 
   .tabbar {
     display: flex;
