@@ -6,9 +6,9 @@ function getHistory() {
   return JSON.parse(localStorage.getItem('history') || '[]');
 }
 
-// 切换标签：不跳页面，只换下面的内容
+// 切换左侧菜单：不跳页面，只换右边的内容
 function switchTab(name) {
-  document.querySelectorAll('.tab-btn').forEach(b => {
+  document.querySelectorAll('.p-item').forEach(b => {
     const on = b.dataset.tab === name;
     b.classList.toggle('active', on);
     b.setAttribute('aria-selected', on);
@@ -18,7 +18,7 @@ function switchTab(name) {
   document.getElementById('panel-posts').hidden = name !== 'posts';
 }
 
-// 三个标签共用同一套列表行
+// 三个菜单共用同一套列表行
 function row(it, actionText, action) {
   return `
     <div class="row-item">
@@ -38,6 +38,20 @@ function emptyBox(text, linkText) {
       <p>${text}</p>
       <a href="index.html" class="empty-link">${linkText || '去逛逛'}</a>
     </div>`;
+}
+
+function updateCounts() {
+  const nFav = getFavs().length;
+  const nHist = getHistory().length;
+  const nPost = getUserPosts().length;
+
+  document.getElementById('statFav').textContent = nFav;
+  document.getElementById('statHist').textContent = nHist;
+  document.getElementById('statPost').textContent = nPost;
+
+  document.getElementById('menuFav').textContent = nFav;
+  document.getElementById('menuHist').textContent = nHist;
+  document.getElementById('menuPost').textContent = nPost;
 }
 
 function renderFavs() {
@@ -65,23 +79,27 @@ function renderPosts() {
 function unfav(id) {
   localStorage.setItem('favs', JSON.stringify(getFavs().filter(x => x !== id)));
   renderFavs();
+  updateCounts();
 }
 
 function dropHistory(id) {
   localStorage.setItem('history', JSON.stringify(getHistory().filter(x => x !== id)));
   renderHistory();
+  updateCounts();
 }
 
 function dropPost(id) {
   saveUserPosts(getUserPosts().filter(x => x.id !== id));
   renderPosts();
+  updateCounts();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.tab-btn').forEach(btn => {
+  document.querySelectorAll('.p-item').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
   renderFavs();
   renderHistory();
   renderPosts();
+  updateCounts();
 });

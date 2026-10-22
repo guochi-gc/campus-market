@@ -17,30 +17,31 @@
     </nav>
   </header>
 
-  <div class="profile-head">
+  <section class="profile-banner">
     <div class="avatar">郭</div>
-    <div>
+    <div class="banner-info">
       <p class="p-name">郭　驰</p>
       <p class="p-sub">本机演示账号 · 数据存在浏览器里</p>
     </div>
-  </div>
+    <div class="banner-stats">
+      <div><b id="statFav">0</b><span>收藏</span></div>
+      <div><b id="statHist">0</b><span>足迹</span></div>
+      <div><b id="statPost">0</b><span>发布</span></div>
+    </div>
+  </section>
 
-  <div class="tabs" role="tablist">
-    <button class="tab-btn active" data-tab="fav" role="tab" aria-selected="true" aria-controls="panel-fav">收藏</button>
-    <button class="tab-btn" data-tab="history" role="tab" aria-selected="false" aria-controls="panel-history">浏览记录</button>
-    <button class="tab-btn" data-tab="posts" role="tab" aria-selected="false" aria-controls="panel-posts">我发布的</button>
-  </div>
+  <div class="profile-layout">
+    <aside class="p-menu">
+      <button class="p-item active" data-tab="fav">收藏<span class="p-n" id="menuFav">0</span></button>
+      <button class="p-item" data-tab="history">足迹<span class="p-n" id="menuHist">0</span></button>
+      <button class="p-item" data-tab="posts">发布<span class="p-n" id="menuPost">0</span></button>
+    </aside>
 
-  <div class="panel" id="panel-fav" role="tabpanel">
-    <div id="favList"></div>
-  </div>
-
-  <div class="panel" id="panel-history" role="tabpanel" hidden>
-    <div id="historyList"></div>
-  </div>
-
-  <div class="panel" id="panel-posts" role="tabpanel" hidden>
-    <div id="postList"></div>
+    <div class="p-main">
+      <div class="panel" id="panel-fav" role="tabpanel"><div id="favList"></div></div>
+      <div class="panel" id="panel-history" role="tabpanel" hidden><div id="historyList"></div></div>
+      <div class="panel" id="panel-posts" role="tabpanel" hidden><div id="postList"></div></div>
+    </div>
   </div>
 
   <footer>校园集市 · 人机交互课程作业 · 数据保存在本机浏览器</footer>
