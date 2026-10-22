@@ -20,6 +20,19 @@ function shortCollege(name) {
   return name.replace(/学院$/, '');
 }
 
+// 卡片里显示的学院缩写，太长会撑破一行
+const COLLEGE_SHORT = {
+  '计算机与通信工程学院': '计通',
+  '数学与信息科学学院': '数信',
+  '外国语学院': '外语',
+  '电气信息工程学院': '电气',
+  '能源与动力工程学院': '能动'
+};
+function metaPlace(it) {
+  if (it.college) return COLLEGE_SHORT[it.college] || shortCollege(it.college);
+  return it.location;
+}
+
 // ===== 收藏 =====
 function getFavs() {
   return JSON.parse(localStorage.getItem('favs') || '[]');
@@ -192,7 +205,7 @@ function render() {
         <div class="info">
           <p class="title">${it.title}</p>
           <div class="price">${it.price}</div>
-          <div class="meta">${it.condition} · ${it.location} · ${it.time}</div>
+          <div class="meta">${it.condition} · ${metaPlace(it)} · ${it.time}</div>
         </div>
       </a>
     </div>

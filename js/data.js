@@ -3,10 +3,10 @@ const items = [
   // ===== 计算机与通信工程学院 · 网络工程（云计算）=====
   { id:1,  title:"计算机网络（第 8 版）", price:28, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"计算机网络", condition:"九成新", desc:"谢希仁版，只翻过前六章，无笔记。", seller:"计算机与通信工程学院 · 大三", location:"三教楼", emoji:"🌐", keywords:"计算机网络 网络 谢希仁 教材", time:"2 小时前" },
   { id:2,  title:"操作系统概念（第 9 版）", price:35, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"操作系统", condition:"八成新", desc:"有少量划线，重点章节贴了标签。", seller:"计算机与通信工程学院 · 大三", location:"图书馆", emoji:"💻", keywords:"操作系统 OS 教材", time:"5 小时前" },
-  { id:3,  title:"数据库系统概论（第 6 版）", price:22, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"数据库原理", condition:"九成新", desc:"王珊版第 6 版，几乎全新，无笔记。", seller:"郭驰 · 网络工程（云计算）", location:"计算机楼", emoji:"🗄️", img:"img/db-6.jpg", keywords:"数据库 DB SQL 王珊 教材", time:"昨天" },
+  { id:3,  title:"数据库系统概论（第 6 版）", price:22, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"数据库原理", condition:"九成新", desc:"王珊版第 6 版，几乎全新，无笔记。", seller:"计算机与通信工程学院 · 大三", location:"计算机楼", emoji:"🗄️", img:"img/db-6.jpg", keywords:"数据库 DB SQL 王珊 教材", time:"昨天" },
   { id:4,  title:"Linux 系统管理与运维", price:26, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"Linux 系统管理", condition:"八成新", desc:"实验课用的，附一张命令速查表。", seller:"计算机与通信工程学院 · 大三", location:"12 号楼", emoji:"🐧", keywords:"Linux 运维 shell 教材", time:"3 小时前" },
   { id:5,  title:"云计算导论", price:18, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"云计算导论", condition:"九成新", desc:"专业方向课，书角有小折痕。", seller:"计算机与通信工程学院 · 大四", location:"8 号楼", emoji:"☁️", keywords:"云计算 云 虚拟化 教材", time:"6 小时前" },
-  { id:6,  title:"通信网络安全与防护", price:20, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"网络安全", condition:"七成新", desc:"郭文普版，做过课后题，答案用铅笔写的。", seller:"郭驰 · 网络工程（云计算）", location:"计算机楼", emoji:"🔐", img:"img/network-security.jpg", keywords:"网络安全 安全 防护 通信 教材", time:"1 天前" },
+  { id:6,  title:"通信网络安全与防护", price:20, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"网络安全", condition:"七成新", desc:"郭文普版，做过课后题，答案用铅笔写的。", seller:"计算机与通信工程学院 · 大三", location:"计算机楼", emoji:"🔐", img:"img/network-security.jpg", keywords:"网络安全 安全 防护 通信 教材", time:"1 天前" },
   { id:7,  title:"Python 程序设计（第 3 版）", price:15, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"Python 程序设计", condition:"九成新", desc:"只看了前四章，附课程实验代码。", seller:"计算机与通信工程学院 · 大二", location:"三教楼", emoji:"🐍", keywords:"Python 编程 教材", time:"4 小时前" },
 
   // ===== 计算机与通信工程学院 · 软件工程 =====
@@ -36,7 +36,7 @@ const items = [
 
   // ===== 非教材：通用物品，不属于任何学院 =====
   { id:21, title:"罗技 G102 鼠标", price:45, category:"数码", college:"", major:"", course:"", condition:"八成新", desc:"换了无线所以出，功能正常，附原装线。", seller:"电气信息工程学院 · 大三", location:"12 号楼", emoji:"🖱️", keywords:"罗技 鼠标 G102 数码", time:"3 小时前" },
-  { id:22, title:"机械键盘 87 键 红轴", price:120, category:"数码", college:"", major:"", course:"", condition:"九成新", desc:"手感好，声音不大，宿舍可用。", seller:"郭驰 · 网络工程（云计算）", location:"8 号楼", emoji:"⌨️", img:"img/keyboard.jpg", keywords:"键盘 机械键盘 红轴 87键 AULA 数码", time:"6 小时前" },
+  { id:22, title:"机械键盘 87 键 红轴", price:120, category:"数码", college:"", major:"", course:"", condition:"九成新", desc:"手感好，声音不大，宿舍可用。", seller:"计算机与通信工程学院 · 大三", location:"8 号楼", emoji:"⌨️", img:"img/keyboard.jpg", keywords:"键盘 机械键盘 红轴 87键 AULA 数码", time:"6 小时前" },
   { id:23, title:"24 寸显示器", price:280, category:"数码", college:"", major:"", course:"", condition:"七成新", desc:"毕业清仓，无坏点，送 HDMI 线。", seller:"计算机与通信工程学院 · 大四", location:"15 号楼", emoji:"🖥️", keywords:"显示器 屏幕 24寸 数码", time:"1 天前" },
   { id:24, title:"LED 护眼台灯", price:25, category:"生活", college:"", major:"", course:"", condition:"九成新", desc:"三档亮度，可调色温，宿舍必备。", seller:"材料与化学工程学院 · 大二", location:"6 号楼", emoji:"💡", keywords:"台灯 护眼 LED 灯 生活", time:"4 小时前" },
   { id:25, title:"折叠收纳箱 60L", price:18, category:"生活", college:"", major:"", course:"", condition:"全新", desc:"买多了，未拆封。", seller:"材料与化学工程学院 · 大一", location:"9 号楼", emoji:"📦", keywords:"收纳箱 收纳 箱子 60L 生活", time:"8 小时前" },
@@ -45,9 +45,9 @@ const items = [
   { id:28, title:"二手自行车 变速 26 寸", price:180, category:"其他", college:"", major:"", course:"", condition:"七成新", desc:"毕业出，刹车和变速都正常。", seller:"机械工程学院 · 大四", location:"校门口", emoji:"🚲", keywords:"自行车 单车 变速 26寸 其他", time:"3 天前" },
 
   // ===== 有实拍图片的商品 =====
-  { id:29, title:"信息安全概论", price:25, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"信息安全概论", condition:"九成新", desc:"邱晓红版，清华社，只翻了前三章。", seller:"郭驰 · 网络工程（云计算）", location:"三教楼", emoji:"🛡️", img:"img/infosec.jpg", keywords:"信息安全 安全 概论 教材", time:"3 小时前" },
-  { id:30, title:"计算机专业英语（新视野职业英语）", price:18, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"计算机专业英语", condition:"八成新", desc:"吕云翔主编，书里的生词表做过标注。", seller:"郭驰 · 网络工程（云计算）", location:"外语楼", emoji:"🔤", img:"img/english-cs.jpg", keywords:"计算机专业英语 专业英语 英语 吕云翔 教材", time:"昨天" },
-  { id:31, title:"人机交互（第 3 版，Dix）", price:55, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"人机交互", condition:"九成新", desc:"Alan Dix 原版，我的专业参考书，内页干净。", seller:"郭驰 · 网络工程（云计算）", location:"计算机楼", emoji:"🖱️", img:"img/hci.jpg", keywords:"人机交互 HCI Dix 交互设计 教材", time:"5 小时前" },
-  { id:32, title:"毛泽东思想和中国特色社会主义理论体系概论（2023 年版）", price:12, category:"教材", college:"", major:"", course:"", condition:"九成新", desc:"思政课教材，只划过目录。", seller:"郭驰 · 网络工程（云计算）", location:"三教楼", emoji:"📕", img:"img/maogai.jpg", keywords:"毛概 思政 公共课 教材", time:"昨天" },
-  { id:33, title:"马克思主义基本原理（2023 年版）", price:12, category:"教材", college:"", major:"", course:"", condition:"八成新", desc:"思政课教材，有少量荧光笔标记。", seller:"郭驰 · 网络工程（云计算）", location:"三教楼", emoji:"📗", img:"img/mayuan.jpg", keywords:"马原 马克思主义 思政 公共课 教材", time:"2 天前" }
+  { id:29, title:"信息安全概论", price:25, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"信息安全概论", condition:"九成新", desc:"邱晓红版，清华社，只翻了前三章。", seller:"计算机与通信工程学院 · 大三", location:"三教楼", emoji:"🛡️", img:"img/infosec.jpg", keywords:"信息安全 安全 概论 教材", time:"3 小时前" },
+  { id:30, title:"计算机专业英语（新视野职业英语）", price:18, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"计算机专业英语", condition:"八成新", desc:"吕云翔主编，书里的生词表做过标注。", seller:"计算机与通信工程学院 · 大三", location:"外语楼", emoji:"🔤", img:"img/english-cs.jpg", keywords:"计算机专业英语 专业英语 英语 吕云翔 教材", time:"昨天" },
+  { id:31, title:"人机交互（第 3 版，Dix）", price:55, category:"教材", college:"计算机与通信工程学院", major:"网络工程（云计算）", course:"人机交互", condition:"九成新", desc:"Alan Dix 原版，我的专业参考书，内页干净。", seller:"计算机与通信工程学院 · 大三", location:"计算机楼", emoji:"🖱️", img:"img/hci.jpg", keywords:"人机交互 HCI Dix 交互设计 教材", time:"5 小时前" },
+  { id:32, title:"毛泽东思想和中国特色社会主义理论体系概论（2023 年版）", price:12, category:"教材", college:"", major:"", course:"", condition:"九成新", desc:"思政课教材，只划过目录。", seller:"计算机与通信工程学院 · 大三", location:"三教楼", emoji:"📕", img:"img/maogai.jpg", keywords:"毛概 思政 公共课 教材", time:"昨天" },
+  { id:33, title:"马克思主义基本原理（2023 年版）", price:12, category:"教材", college:"", major:"", course:"", condition:"八成新", desc:"思政课教材，有少量荧光笔标记。", seller:"计算机与通信工程学院 · 大三", location:"三教楼", emoji:"📗", img:"img/mayuan.jpg", keywords:"马原 马克思主义 思政 公共课 教材", time:"2 天前" }
 ];

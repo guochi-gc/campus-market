@@ -109,8 +109,8 @@ body.scrolled header .count { display: none; }
 
 /* ===== 首页 Hero ===== */
 .hero {
-  padding: 34px 36px 30px;
-  margin-bottom: 22px;
+  padding: 24px 32px 22px;
+  margin-bottom: 18px;
   border: none;
   border-radius: 18px;
   color: #fff;
