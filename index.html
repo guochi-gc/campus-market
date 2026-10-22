@@ -25,7 +25,19 @@
     <input id="search" class="search" type="search" placeholder="搜索商品，例如：高数、云计算、键盘" aria-label="搜索商品">
   </section>
 
-  <div class="layout">
+  <div class="crumb" id="crumb"></div>
+
+  <div class="toolbar">
+    <div class="filters" id="filters"></div>
+    <div class="sort" id="sort" role="group" aria-label="排序方式">
+      <button data-sort="default" class="active">默认</button>
+      <button data-sort="newest">最新</button>
+      <button data-sort="price-asc">价格 ↑</button>
+      <button data-sort="price-desc">价格 ↓</button>
+    </div>
+  </div>
+
+  <div class="shop" id="grid">
     <aside class="side">
       <div class="side-block">
         <h3>学院</h3>
@@ -36,22 +48,6 @@
         <ul class="side-list" id="majorList"></ul>
       </div>
     </aside>
-
-    <div class="main-col">
-      <div class="crumb" id="crumb"></div>
-
-      <div class="toolbar">
-        <div class="filters" id="filters"></div>
-        <div class="sort" id="sort" role="group" aria-label="排序方式">
-          <button data-sort="default" class="active">默认</button>
-          <button data-sort="newest">最新</button>
-          <button data-sort="price-asc">价格 ↑</button>
-          <button data-sort="price-desc">价格 ↓</button>
-        </div>
-      </div>
-
-      <div class="grid" id="grid"></div>
-    </div>
   </div>
 
   <footer>校园集市 · 人机交互课程作业 · 数据保存在本机浏览器</footer>

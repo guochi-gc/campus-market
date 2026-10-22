@@ -187,16 +187,19 @@ function render() {
 
   document.getElementById('count').textContent = '共 ' + list.length + ' 件';
 
+  // 只清商品卡片和空状态，保留左侧筛选栏
+  grid.querySelectorAll('.card, .empty').forEach(el => el.remove());
+
   if (list.length === 0) {
-    grid.innerHTML = `
+    grid.insertAdjacentHTML('beforeend', `
       <div class="empty">
         <p>这个条件下没有商品</p>
         <button onclick="clearAll()">清空筛选条件</button>
-      </div>`;
+      </div>`);
     return;
   }
 
-  grid.innerHTML = list.map(it => `
+  grid.insertAdjacentHTML('beforeend', list.map(it => `
     <div class="card">
       <span class="cat-tag">${it.major || it.category}</span>
       <button class="fav-btn" onclick="toggleFav(${it.id})" aria-label="收藏 ${esc(it.title)}" aria-pressed="${isFav(it.id)}">${isFav(it.id) ? '★' : '☆'}</button>
@@ -209,7 +212,7 @@ function render() {
         </div>
       </a>
     </div>
-  `).join('');
+  `).join(''));
 }
 
 function clearAll() {
