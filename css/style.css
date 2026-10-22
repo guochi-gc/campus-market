@@ -199,6 +199,7 @@ body.scrolled header .count { display: none; }
   grid-column: 1;
   grid-row: 1 / span 2;
   align-self: stretch;
+  min-height: 600px;      /* 不跟着商品行数塌缩，切换学院时不跳 */
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -599,7 +600,7 @@ footer {
 
   .layout { grid-template-columns: 1fr; gap: 14px; }
   .shop { grid-template-columns: 1fr; gap: 14px; }
-  .shop .side { grid-column: 1 / -1; grid-row: auto; }  .side { position: static; display: flex; gap: 10px; overflow-x: auto; padding-bottom: 2px; }
+  .shop .side { grid-column: 1 / -1; grid-row: auto; min-height: 0; }  .side { position: static; display: flex; gap: 10px; overflow-x: auto; padding-bottom: 2px; }
   .side-block { flex: none; margin: 0; padding: 6px; border-radius: 12px; }
   .side-block h3 { display: none; }
   .side-list { display: flex; gap: 6px; }
