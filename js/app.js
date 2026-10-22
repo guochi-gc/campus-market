@@ -204,6 +204,8 @@ function clearAll() {
 
   const search = document.getElementById('search');
   if (search) search.value = '';
+  const inlineSearch = document.getElementById('searchInline');
+  if (inlineSearch) inlineSearch.value = '';
 
   const favFilter = document.getElementById('favFilter');
   favFilter.classList.remove('on');
@@ -221,10 +223,27 @@ function clearAll() {
 
 // ===== 绑定事件 =====
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('search').addEventListener('input', (e) => {
-    state.keyword = e.target.value;
+  const heroSearch = document.getElementById('search');
+  const inlineSearch = document.getElementById('searchInline');
+
+  // 两个搜索框共用一份状态
+  function onSearchInput(value) {
+    state.keyword = value;
+    if (heroSearch.value !== value) heroSearch.value = value;
+    if (inlineSearch && inlineSearch.value !== value) inlineSearch.value = value;
     render();
-  });
+  }
+
+  heroSearch.addEventListener('input', (e) => onSearchInput(e.target.value));
+  if (inlineSearch) inlineSearch.addEventListener('input', (e) => onSearchInput(e.target.value));
+
+  // 滚过 Hero 后，把搜索并进通栏
+  const heroEl = document.querySelector('.hero');
+  window.addEventListener('scroll', () => {
+    if (!heroEl) return;
+    const pastHero = heroEl.getBoundingClientRect().bottom < 70;
+    document.body.classList.toggle('scrolled', pastHero);
+  }, { passive: true });
 
   document.querySelectorAll('#sort button').forEach(btn => {
     btn.addEventListener('click', () => {
