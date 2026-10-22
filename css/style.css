@@ -198,7 +198,12 @@ body.scrolled header .count { display: none; }
 .shop .side {
   grid-column: 1;
   grid-row: 1 / span 2;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
+.shop .side-block { flex: 1; margin-bottom: 0; }
 .layout { display: grid; grid-template-columns: 208px 1fr; gap: 26px; align-items: start; }
 .side { position: static; }
 .side-block {
