@@ -3,14 +3,14 @@
   --blue: #2563eb;
   --blue-dark: #1d4ed8;
   --blue-soft: #eff6ff;
-  --ink: #0f172a;
-  --text: #334155;
+  --ink: #0b1220;
+  --text: #2c3a4d;
   --muted: #64748b;
   --faint: #94a3b8;
   --line: #e2e8f0;
   --bg: #f6f8fc;
   --card: #ffffff;
-  --red: #ef4444;
+  --red: #f97316;
   --radius: 12px;
 }
 
@@ -18,9 +18,9 @@
 
 body {
   font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
-  max-width: 1040px;
+  max-width: 1560px;
   margin: 0 auto;
-  padding: 0 20px 80px;
+  padding: 0 32px 80px;
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
@@ -28,14 +28,19 @@ body {
 
 a { color: var(--blue); }
 
-/* ===== 顶栏 ===== */
+/* ===== 顶栏（通栏 + 吸顶）===== */
 header {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 22px 0;
+  padding: 18px 32px;
+  margin: 0 -32px 24px;
+  background: #fff;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
 header h1, header .brand {
   font-size: 22px;
@@ -84,15 +89,14 @@ header .fav-filter.on { background: var(--blue); color: #fff; border-color: var(
 .hero {
   padding: 34px 36px 30px;
   margin-bottom: 22px;
-  border: 1px solid #dbeafe;
+  border: none;
   border-radius: 18px;
-  background:
-    radial-gradient(900px 220px at 12% -10%, #e0ecff 0%, transparent 62%),
-    radial-gradient(700px 200px at 92% 0%, #ede9fe 0%, transparent 58%),
-    #f8fbff;
+  color: #fff;
+  background: linear-gradient(120deg, #1e3a8a 0%, #2563eb 55%, #4f46e5 100%);
+  box-shadow: 0 10px 26px rgba(30, 58, 138, .18);
 }
-.hero h2 { margin: 0 0 8px; font-size: 26px; letter-spacing: .5px; }
-.hero p { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.hero h2 { margin: 0 0 8px; font-size: 26px; letter-spacing: .5px; color: #fff; }
+.hero p { margin: 0 0 20px; color: rgba(255, 255, 255, .82); font-size: 14px; }
 
 /* ===== 搜索框 ===== */
 .search {
@@ -108,7 +112,7 @@ header .fav-filter.on { background: var(--blue); color: #fff; border-color: var(
   background-position: 19px center;
   border: 1px solid var(--line);
   border-radius: 999px;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, .06);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, .18);
 }
 .search::placeholder { color: var(--faint); }
 .search:hover { border-color: #cbd5e1; }
@@ -164,7 +168,7 @@ header .fav-filter.on { background: var(--blue); color: #fff; border-color: var(
 
 /* ===== 学院 / 专业 二级筛选 ===== */
 .layout { display: grid; grid-template-columns: 208px 1fr; gap: 26px; align-items: start; }
-.side { position: sticky; top: 16px; }
+.side { position: sticky; top: 92px; }
 .side-block {
   padding: 14px 12px;
   margin-bottom: 12px;
@@ -227,8 +231,8 @@ header .fav-filter.on { background: var(--blue); color: #fff; border-color: var(
 /* ===== 商品卡片网格 ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
 }
 .card {
   background: var(--card);
@@ -489,7 +493,7 @@ footer {
 
 @media (max-width: 640px) {
   body { padding: 0 16px 84px; }
-  header { padding: 16px 0; margin-bottom: 18px; gap: 10px; }
+  header { padding: 14px 16px; margin: 0 -16px 18px; gap: 10px; }
   header h1, header .brand { font-size: 19px; }
   .topnav { display: none; }
   header .fav-filter { margin-left: auto; }
