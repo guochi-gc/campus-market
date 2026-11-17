@@ -7,14 +7,17 @@
   --text: #2c3a4d;
   --muted: #64748b;
   --faint: #94a3b8;
-  --line: #efe6dc;
-  --bg: #faf6f0;
+  --line: #e2e7ef;
+  --bg: #eef1f6;
   --card: #ffffff;
   --red: #f97316;
   --radius: 12px;
 }
 
 * { box-sizing: border-box; }
+
+/* 通栏背景用了 100vw，这里挡掉横向滚动条 */
+html { overflow-x: hidden; }
 
 body {
   font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
@@ -34,14 +37,37 @@ header {
   align-items: center;
   gap: 14px;
   padding: 18px 32px;
-  margin: 0 -32px 24px;
-  background: #fff;
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+  margin: 0 -32px 0;
+  background: transparent;
+  border-bottom: none;
   position: sticky;
   top: 0;
   z-index: 30;
 }
+/* 白色底真正铺满整屏，露出页面底色的缝就没有了 */
+header::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  margin-left: -50vw;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .06);
+  z-index: -1;
+}
+
+/* 首页：顶栏直接坐在橙色渐变上，跟下面的 hero 连成一整块 */
+body.home header::before {
+  background: linear-gradient(180deg, #ff6a34 0%, #ff8845 100%);
+  box-shadow: none;
+}
+body.home.scrolled header::before { background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .06); }
+body.home header .brand { color: #fff; }
+body.home header .count { color: rgba(255, 255, 255, .9); }
+body.home.scrolled header .brand { color: var(--blue); }
+body.home.scrolled header .count { color: var(--muted); }
 header h1, header .brand {
   font-size: 22px;
   font-weight: 700;
@@ -107,18 +133,68 @@ header .fav-filter.on { background: var(--blue); color: #fff; border-color: var(
 body.scrolled .search-inline { display: block; }
 body.scrolled header .count { display: none; }
 
-/* ===== 首页 Hero ===== */
-.hero {
-  padding: 24px 32px 22px;
-  margin-bottom: 18px;
-  border: none;
-  border-radius: 18px;
-  color: #fff;
-  background: linear-gradient(120deg, #1e3a8a 0%, #2563eb 55%, #4f46e5 100%);
-  box-shadow: 0 10px 26px rgba(30, 58, 138, .18);
+/* 首页：顶栏 + hero 合成一整块，只有一条渐变，中间没有接缝 */
+.topband {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: linear-gradient(180deg,
+    #3f6ff0 0px,
+    #5b8cf5 54px,
+    #8fb4f9 112px,
+    #c3d8fc 172px,
+    #e2ebfd 236px,
+    var(--bg) 300px);
 }
-.hero h2 { margin: 0 0 8px; font-size: 26px; letter-spacing: .5px; color: #fff; }
-.hero p { margin: 0 0 20px; color: rgba(255, 255, 255, .82); font-size: 14px; }
+body.home .topband > header {
+  position: relative;
+  top: auto;
+  max-width: 1560px;
+  margin: 0 auto;
+  background: transparent;
+}
+body.home header::before { display: none; }
+body.home header .brand { color: #fff; }
+body.home header .count { color: rgba(255, 255, 255, .9); }
+
+/* 整块（标题 + 搜索框）滚出视野后，顶栏才脱离正常流、挂到顶端并变白 */
+body.home.stuck .topband { padding-top: var(--hh, 72px); }
+body.home.stuck header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: none;
+  margin: 0;
+  padding: 12px max(32px, calc((100vw - 1496px) / 2));
+  z-index: 50;
+}
+body.home.stuck header::before { display: block; background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .08); }
+body.home.stuck header .brand { color: var(--blue); }
+body.home.stuck header .count { color: var(--muted); }
+
+/* ===== 首页 Hero：通栏背景 + 内容居中 ===== */
+.hero {
+  position: static;
+  width: auto;
+  left: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: #fff;
+  background: none;
+  box-shadow: none;
+}
+.hero-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 24px 32px 34px;
+}
+.hero h2 { margin: 0 0 8px; font-size: 26px; letter-spacing: .5px; color: #fff; text-shadow: 0 1px 3px rgba(140, 50, 0, .28); }
+.hero p { margin: 0 0 20px; color: rgba(255, 255, 255, .95); font-size: 14px; text-shadow: 0 1px 3px rgba(140, 50, 0, .22); }
 
 /* ===== 搜索框 ===== */
 .search {
@@ -189,9 +265,10 @@ body.scrolled header .count { display: none; }
 .sort button.active { background: var(--blue-soft); border-color: #bfdbfe; color: var(--blue); font-weight: 600; }
 
 /* ===== 主区：筛选框占 1 列 × 2 行，商品绕排 ===== */
+/* 6 列：第 1 列是学院侧栏，后面 5 列放商品 */
 .shop {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 16px;
   align-items: start;
 }
@@ -269,24 +346,29 @@ body.scrolled header .count { display: none; }
 /* ===== 商品卡片网格 ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+  gap: 14px;
 }
 .card {
-  background: var(--card);
-  border-radius: 14px;
+  background: #fff;
+  border-radius: 10px;
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: none;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .07);
   position: relative;
-  transition: transform .18s, box-shadow .18s, border-color .18s;
+  transition: transform .18s, box-shadow .18s;
 }
 .card:hover {
   transform: translateY(-3px);
-  border-color: #dbeafe;
-  box-shadow: 0 12px 26px rgba(15, 23, 42, .09);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, .14);
 }
+
+/* 靠底色拉开：白卡片浮在浅灰页面上 */
+.card::before { display: none; }
 .card .thumb {
-  height: 190px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -300,18 +382,19 @@ body.scrolled header .count { display: none; }
 .thumb[data-cat="运动"] { background: linear-gradient(160deg, #fff6ec, #ffe3cc); }
 .thumb[data-cat="其他"] { background: linear-gradient(160deg, #f4f6f9, #e6ebf2); }
 
-.card .info { padding: 12px; }
+.card .info { padding: 10px 10px 11px; }
 .card .title {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
-  margin: 0 0 6px;
+  line-height: 1.35;
+  margin: 0 0 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.card .price { color: var(--red); font-weight: 700; font-size: 17px; }
+.card .price { color: var(--red); font-weight: 700; font-size: 16px; }
 .card .price::before { content: "¥"; font-size: 12px; }
-.card .meta { font-size: 12px; color: var(--faint); margin-top: 8px; }
+.card .meta { font-size: 11.5px; color: var(--faint); margin-top: 6px; }
 .card .cat-tag {
   position: absolute;
   left: 10px;
@@ -321,6 +404,33 @@ body.scrolled header .count { display: none; }
   color: var(--blue);
   background: rgba(255,255,255,.92);
   border: 1px solid #dbeafe;
+  border-radius: 999px;
+}
+
+/* ===== 已售：卡片变灰 + 印章 ===== */
+.card.sold { opacity: .62; }
+.card.sold:hover { transform: none; box-shadow: none; }
+.card.sold .thumb::after {
+  content: "已售";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-11deg);
+  padding: 6px 20px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #fff;
+  background: rgba(15, 23, 42, .62);
+  border-radius: 10px;
+}
+.sold-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: #64748b;
   border-radius: 999px;
 }
 
@@ -397,6 +507,7 @@ footer {
   background: var(--blue-soft);
   color: var(--blue);
 }
+.detail-info .tags span.sold-badge { background: #64748b; color: #fff; font-weight: 600; }
 .desc { color: var(--text); line-height: 1.8; }
 .seller { list-style: none; padding: 0; color: var(--muted); font-size: 14px; line-height: 2; }
 .fav-btn-big {
@@ -582,12 +693,12 @@ footer {
 
 @media (max-width: 640px) {
   body { padding: 0 16px 84px; }
-  header { padding: 14px 16px; margin: 0 -16px 18px; gap: 10px; }
+  header { padding: 14px 16px; margin: 0 -16px 0; gap: 10px; }
   header h1, header .brand { font-size: 19px; }
   .topnav { display: none; }
   .search-inline { display: none !important; }
   header .fav-filter { margin-left: auto; }
-  .hero { padding: 24px 20px; border-radius: 14px; }
+  .hero-inner { padding: 22px 16px 20px; }
   .hero h2 { font-size: 21px; }
   .search { height: 46px; font-size: 14px; }
   .toolbar { gap: 10px; }
@@ -632,8 +743,14 @@ footer {
   .tabbar .tab.active { color: var(--blue); font-weight: 600; }
 }
 
-/* ===== 商品实拍图：有图显示图，没图回落 emoji ===== */
-.card .thumb img,
+/* ===== 商品实拍图：有图铺满整块，没图回落 emoji ===== */
+.card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  padding: 0;
+}
 .detail-thumb img,
 .row-thumb img {
   width: 100%;
@@ -641,5 +758,4 @@ footer {
   object-fit: contain;
   display: block;
 }
-.card .thumb img { padding: 6px 8px; }
 .row-thumb img { padding: 2px; }
