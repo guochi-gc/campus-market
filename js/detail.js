@@ -46,6 +46,7 @@ function render() {
         <div class="tags">
           <span>${it.category}</span>
           <span>${it.condition}</span>
+          ${it.status === 'sold' ? '<span class="sold-badge">已售出</span>' : ''}
         </div>
         <p class="desc">${it.desc}</p>
         <ul class="seller">
