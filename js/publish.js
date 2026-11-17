@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: document.getElementById('category').value,
       condition: document.getElementById('condition').value,
       desc: document.getElementById('desc').value.trim() || '卖家没有写补充说明。',
-      seller: '郭驰 · 本机发布',
+      seller: '演示账户 · 本机发布',
       location: place,
       emoji: pickedEmoji,
       keywords: '',
