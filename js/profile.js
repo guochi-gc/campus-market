@@ -72,8 +72,30 @@ function renderHistory() {
 function renderPosts() {
   const list = getUserPosts();
   document.getElementById('postList').innerHTML = list.length
-    ? list.map(it => row(it, '下架', 'dropPost')).join('')
+    ? list.map(it => {
+        const sold = it.status === 'sold';
+        return `
+    <div class="row-item">
+      <div class="row-thumb">${it.img ? `<img src="${it.img}" alt="">` : it.emoji}</div>
+      <div class="row-info">
+        <a class="row-title" href="item.html?id=${it.id}">${it.title}</a>
+        <div class="row-meta">${it.condition} · ${it.location} · ${it.time}${sold ? ' · <b class="sold-badge">已售</b>' : ''}</div>
+      </div>
+      <div class="row-price">${it.price}</div>
+      <button class="row-action" onclick="toggleSold(${it.id})">${sold ? '恢复在售' : '标为已售'}</button>
+    </div>`;
+      }).join('')
     : emptyBox('还没有发布过商品', '去发布');
+}
+
+// 在售 ⇄ 已售
+function toggleSold(id) {
+  const list = getUserPosts();
+  const it = list.find(x => x.id === id);
+  if (!it) return;
+  it.status = it.status === 'sold' ? 'on' : 'sold';
+  saveUserPosts(list);
+  renderPosts();
 }
 
 function unfav(id) {
