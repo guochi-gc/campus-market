@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
       location: place,
       emoji: pickedEmoji,
       keywords: '',
-      time: '刚刚'
+      time: '刚刚',
+      status: 'on'                          // on=在售，sold=已售
     };
 
     const list = getUserPosts();
