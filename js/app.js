@@ -2,6 +2,7 @@
 let state = {
   category: '全部',
   onlyFav: false,
+  showSold: false,
   keyword: '',
   sort: 'default',
   college: '全部',
@@ -200,7 +201,7 @@ function render() {
   }
 
   grid.insertAdjacentHTML('beforeend', list.map(it => `
-    <div class="card">
+    <div class="card${it.status === 'sold' ? ' sold' : ''}" data-cat="${it.category}">
       <span class="cat-tag">${it.major || it.category}</span>
       <button class="fav-btn" onclick="toggleFav(${it.id})" aria-label="收藏 ${esc(it.title)}" aria-pressed="${isFav(it.id)}">${isFav(it.id) ? '★' : '☆'}</button>
       <a href="item.html?id=${it.id}" style="text-decoration:none;color:inherit">
@@ -216,7 +217,7 @@ function render() {
 }
 
 function clearAll() {
-  state = { category: '全部', onlyFav: false, keyword: '', sort: 'default', college: '全部', major: '全部' };
+  state = { category: '全部', onlyFav: false, showSold: false, keyword: '', sort: 'default', college: '全部', major: '全部' };
 
   const search = document.getElementById('search');
   if (search) search.value = '';
@@ -226,6 +227,12 @@ function clearAll() {
   const favFilter = document.getElementById('favFilter');
   favFilter.classList.remove('on');
   favFilter.setAttribute('aria-pressed', 'false');
+
+  const soldFilter = document.getElementById('soldFilter');
+  if (soldFilter) {
+    soldFilter.classList.remove('on');
+    soldFilter.setAttribute('aria-pressed', 'false');
+  }
 
   document.querySelectorAll('#sort button').forEach(b => {
     b.classList.toggle('active', b.dataset.sort === 'default');
@@ -253,12 +260,21 @@ document.addEventListener('DOMContentLoaded', () => {
   heroSearch.addEventListener('input', (e) => onSearchInput(e.target.value));
   if (inlineSearch) inlineSearch.addEventListener('input', (e) => onSearchInput(e.target.value));
 
-  // 滚过 Hero 后，把搜索并进通栏
-  const heroEl = document.querySelector('.hero');
+  // 整块（顶栏 + 搜索框）滚出视野后，顶栏才吸顶变白
+  const topband = document.querySelector('.topband');
+  const headerEl = document.querySelector('header');
+  function syncHeaderHeight() {
+    if (headerEl) document.documentElement.style.setProperty('--hh', headerEl.offsetHeight + 'px');
+  }
+  window.addEventListener('resize', syncHeaderHeight);
+  syncHeaderHeight();
+
   window.addEventListener('scroll', () => {
-    if (!heroEl) return;
-    const pastHero = heroEl.getBoundingClientRect().bottom < 70;
-    document.body.classList.toggle('scrolled', pastHero);
+    if (!topband || !headerEl) return;
+    // padding-top 补偿会让 topband 高度保持恒定，所以这个判定是稳定的
+    const stuck = topband.getBoundingClientRect().bottom <= 0;
+    document.body.classList.toggle('stuck', stuck);
+    document.body.classList.toggle('scrolled', stuck);
   }, { passive: true });
 
   document.querySelectorAll('#sort button').forEach(btn => {
@@ -273,6 +289,13 @@ document.addEventListener('DOMContentLoaded', () => {
     state.onlyFav = !state.onlyFav;
     e.currentTarget.classList.toggle('on', state.onlyFav);
     e.currentTarget.setAttribute('aria-pressed', state.onlyFav);
+    render();
+  });
+
+  document.getElementById('soldFilter')?.addEventListener('click', (e) => {
+    state.showSold = !state.showSold;
+    e.currentTarget.classList.toggle('on', state.showSold);
+    e.currentTarget.setAttribute('aria-pressed', state.showSold);
     render();
   });
 
