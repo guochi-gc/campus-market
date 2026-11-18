@@ -1,4 +1,5 @@
 // ===== 页面状态 =====
+const PAGE_SIZE = 12;          // 首屏只渲染这么多，快滑到底再追加
 let state = {
   category: '全部',
   onlyFav: false,
@@ -6,7 +7,8 @@ let state = {
   keyword: '',
   sort: 'default',
   college: '全部',
-  major: '全部'
+  major: '全部',
+  shown: PAGE_SIZE
 };
 const CATS = ['全部', '教材', '数码', '生活', '运动', '其他'];
 
@@ -46,7 +48,7 @@ function toggleFav(id) {
   if (favs.includes(id)) favs = favs.filter(x => x !== id);
   else favs.push(id);
   localStorage.setItem('favs', JSON.stringify(favs));
-  render();
+  resetAndRender();
 }
 
 // ===== 学院 / 专业 列表 =====
@@ -106,7 +108,7 @@ function renderSide() {
       state.major = '全部';
       renderSide();
       renderCrumb();
-      render();
+      resetAndRender();
     });
   });
 
@@ -131,7 +133,7 @@ function renderSide() {
       state.major = btn.dataset.major;
       renderSide();
       renderCrumb();
-      render();
+      resetAndRender();
     });
   });
 }
@@ -158,7 +160,7 @@ function renderCrumb() {
       }
       renderSide();
       renderCrumb();
-      render();
+      resetAndRender();
     });
   });
 }
@@ -176,7 +178,7 @@ function renderFilters() {
     btn.addEventListener('click', () => {
       state.category = btn.dataset.cat;
       renderFilters();
-      render();
+      resetAndRender();
     });
   });
 }
@@ -184,14 +186,15 @@ function renderFilters() {
 // ===== 渲染卡片 =====
 function render() {
   const grid = document.getElementById('grid');
-  const list = getFiltered();
+  const all = getFiltered();
+  const list = all.slice(0, state.shown);
 
-  document.getElementById('count').textContent = '共 ' + list.length + ' 件';
+  document.getElementById('count').textContent = '共 ' + all.length + ' 件';
 
-  // 只清商品卡片和空状态，保留左侧筛选栏
-  grid.querySelectorAll('.card, .empty').forEach(el => el.remove());
+  // 只清商品卡片、空状态和加载提示，保留左侧筛选栏
+  grid.querySelectorAll('.card, .empty, .load-more').forEach(el => el.remove());
 
-  if (list.length === 0) {
+  if (all.length === 0) {
     grid.insertAdjacentHTML('beforeend', `
       <div class="empty">
         <p>这个条件下没有商品</p>
@@ -205,7 +208,7 @@ function render() {
       <span class="cat-tag">${it.major || it.category}</span>
       <button class="fav-btn" onclick="toggleFav(${it.id})" aria-label="收藏 ${esc(it.title)}" aria-pressed="${isFav(it.id)}">${isFav(it.id) ? '★' : '☆'}</button>
       <a href="item.html?id=${it.id}" style="text-decoration:none;color:inherit">
-        <div class="thumb" data-cat="${it.category}">${it.img ? `<img src="${it.img}" alt="${esc(it.title)}" loading="lazy">` : it.emoji}</div>
+        <div class="thumb" data-cat="${it.category}">${it.img ? `<img src="${it.img}" alt="${esc(it.title)}" loading="lazy" decoding="async">` : it.emoji}</div>
         <div class="info">
           <p class="title">${it.title}</p>
           <div class="price">${it.price}</div>
@@ -214,10 +217,23 @@ function render() {
       </a>
     </div>
   `).join(''));
+
+  // 底部提示：还有更多就提示继续滑，到底了就说明一下
+  if (all.length > list.length) {
+    grid.insertAdjacentHTML('beforeend', `<div class="load-more">已显示 ${list.length} / ${all.length} 件，继续往下滑加载更多</div>`);
+  } else if (all.length > PAGE_SIZE) {
+    grid.insertAdjacentHTML('beforeend', `<div class="load-more">已经到底了，共 ${all.length} 件</div>`);
+  }
+}
+
+// 换条件时回到第一屏
+function resetAndRender() {
+  state.shown = PAGE_SIZE;
+  render();
 }
 
 function clearAll() {
-  state = { category: '全部', onlyFav: false, showSold: false, keyword: '', sort: 'default', college: '全部', major: '全部' };
+  state = { category: '全部', onlyFav: false, showSold: false, keyword: '', sort: 'default', college: '全部', major: '全部', shown: PAGE_SIZE };
 
   const search = document.getElementById('search');
   if (search) search.value = '';
@@ -241,7 +257,7 @@ function clearAll() {
   renderSide();
   renderCrumb();
   renderFilters();
-  render();
+  resetAndRender();
 }
 
 // ===== 绑定事件 =====
@@ -254,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     state.keyword = value;
     if (heroSearch.value !== value) heroSearch.value = value;
     if (inlineSearch && inlineSearch.value !== value) inlineSearch.value = value;
-    render();
+    resetAndRender();
   }
 
   heroSearch.addEventListener('input', (e) => onSearchInput(e.target.value));
@@ -281,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       state.sort = btn.dataset.sort;
       document.querySelectorAll('#sort button').forEach(b => b.classList.toggle('active', b === btn));
-      render();
+      resetAndRender();
     });
   });
 
@@ -289,15 +305,24 @@ document.addEventListener('DOMContentLoaded', () => {
     state.onlyFav = !state.onlyFav;
     e.currentTarget.classList.toggle('on', state.onlyFav);
     e.currentTarget.setAttribute('aria-pressed', state.onlyFav);
-    render();
+    resetAndRender();
   });
 
   document.getElementById('soldFilter')?.addEventListener('click', (e) => {
     state.showSold = !state.showSold;
     e.currentTarget.classList.toggle('on', state.showSold);
     e.currentTarget.setAttribute('aria-pressed', state.showSold);
-    render();
+    resetAndRender();
   });
+
+  // 快滑到底时追加下一批（无限滚动）
+  window.addEventListener('scroll', () => {
+    if (state.shown >= getFiltered().length) return;
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;
+    if (!nearBottom) return;
+    state.shown += PAGE_SIZE;
+    render();
+  }, { passive: true });
 
   renderSide();
   renderCrumb();
