@@ -19,6 +19,22 @@
 
   <div id="detail"></div>
 
+  <div class="pay-mask" id="payMask" hidden>
+    <div class="pay-box" role="dialog" aria-modal="true" aria-labelledby="payHead">
+      <h3 id="payHead">确认订单</h3>
+      <div class="pay-row"><span>商品</span><b id="payTitle"></b></div>
+      <div class="pay-row"><span>价格</span><b class="pay-price" id="payPrice"></b></div>
+      <div class="pay-row"><span>交易地点</span><b id="payPlace"></b></div>
+      <div class="pay-row"><span>支付方式</span><b>模拟支付（演示用，不发生真实扣款）</b></div>
+      <div class="pay-actions">
+        <button class="pay-cancel" onclick="closePay()">取消</button>
+        <button class="pay-ok" onclick="doPay()">确认支付</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
   <div id="relatedWrap" hidden>
     <h2 class="section-title">同类商品</h2>
     <div class="grid" id="related"></div>
