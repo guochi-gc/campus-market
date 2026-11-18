@@ -16,6 +16,8 @@ function switchTab(name) {
   document.getElementById('panel-fav').hidden = name !== 'fav';
   document.getElementById('panel-history').hidden = name !== 'history';
   document.getElementById('panel-posts').hidden = name !== 'posts';
+  const pOrder = document.getElementById('panel-orders');
+  if (pOrder) pOrder.hidden = name !== 'orders';
 }
 
 // 三个菜单共用同一套列表行
@@ -52,6 +54,9 @@ function updateCounts() {
   document.getElementById('menuFav').textContent = nFav;
   document.getElementById('menuHist').textContent = nHist;
   document.getElementById('menuPost').textContent = nPost;
+  const nOrder = getOrders().length;
+  const menuOrder = document.getElementById('menuOrder');
+  if (menuOrder) menuOrder.textContent = nOrder;
 }
 
 function renderFavs() {
@@ -98,6 +103,24 @@ function toggleSold(id) {
   renderPosts();
 }
 
+function renderOrders() {
+  const list = getOrders();
+  const box = document.getElementById('orderList');
+  if (!box) return;
+  box.innerHTML = list.length
+    ? list.map(o => `
+    <div class="row-item">
+      <div class="row-thumb">🧾</div>
+      <div class="row-info">
+        <a class="row-title" href="item.html?id=${o.itemId}">${o.title}</a>
+        <div class="row-meta">${o.time} · 交易地点 ${o.place || '—'} · 已支付</div>
+      </div>
+      <div class="row-price">¥${o.price}</div>
+      <span class="order-state">待当面交易</span>
+    </div>`).join('')
+    : emptyBox('还没有订单，去详情页点「立即购买」试试');
+}
+
 function unfav(id) {
   localStorage.setItem('favs', JSON.stringify(getFavs().filter(x => x !== id)));
   renderFavs();
@@ -123,5 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFavs();
   renderHistory();
   renderPosts();
+  renderOrders();
   updateCounts();
 });
