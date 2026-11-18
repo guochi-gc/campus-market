@@ -148,4 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPosts();
   renderOrders();
   updateCounts();
+  // 演示与截图用：地址带 ?tab=orders 直接打开订单面板
+  const want = new URLSearchParams(location.search).get('tab');
+  if (want) switchTab(want);
 });
