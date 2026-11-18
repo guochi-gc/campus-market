@@ -759,3 +759,85 @@ footer {
   display: block;
 }
 .row-thumb img { padding: 2px; }
+
+/* ===== 立即购买 / 模拟支付 ===== */
+.detail-actions { display: flex; gap: 10px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+.buy-btn {
+  padding: 12px 26px;
+  border: none;
+  border-radius: 10px;
+  background: var(--blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.buy-btn:hover { background: var(--blue-dark); }
+.buy-btn--done {
+  background: #e2e8f0;
+  color: #64748b;
+  cursor: not-allowed;
+}
+.buy-btn--done:hover { background: #e2e8f0; }
+
+.pay-mask[hidden] { display: none !important; }
+.pay-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.pay-box {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .25);
+}
+.pay-box h3 { margin: 0 0 16px; font-size: 18px; color: var(--ink); }
+.pay-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  font-size: 14px;
+  color: var(--muted);
+  border-bottom: 1px solid #f1f4f9;
+}
+.pay-row b { color: var(--ink); font-weight: 600; text-align: right; }
+.pay-row .pay-price { color: var(--red); font-size: 16px; }
+.pay-actions { display: flex; gap: 10px; margin-top: 18px; }
+.pay-actions button {
+  flex: 1;
+  padding: 11px 0;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+}
+.pay-actions .pay-ok { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+.pay-actions .pay-ok:hover { background: var(--blue-dark); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 60px;
+  transform: translateX(-50%);
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .88);
+  color: #fff;
+  font-size: 14px;
+  z-index: 120;
+}
+.order-state { font-size: 12.5px; color: #15803d; background: #ecfdf3; border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
