@@ -201,7 +201,7 @@ function render() {
   }
 
   grid.insertAdjacentHTML('beforeend', list.map(it => `
-    <div class="card${it.status === 'sold' ? ' sold' : ''}" data-cat="${it.category}">
+    <div class="card${isItemSold(it) ? ' sold' : ''}" data-cat="${it.category}">
       <span class="cat-tag">${it.major || it.category}</span>
       <button class="fav-btn" onclick="toggleFav(${it.id})" aria-label="收藏 ${esc(it.title)}" aria-pressed="${isFav(it.id)}">${isFav(it.id) ? '★' : '☆'}</button>
       <a href="item.html?id=${it.id}" style="text-decoration:none;color:inherit">
