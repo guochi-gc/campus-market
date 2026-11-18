@@ -145,4 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
   viewCount = bumpView(current.id);
   render();
   renderRelated(current, all);
+  // 截图与演示用：地址带 ?pay=1 直接打开确认订单
+  if (new URLSearchParams(location.search).has('pay') && !isItemSold(current)) openPay();
 });
