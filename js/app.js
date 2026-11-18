@@ -184,6 +184,32 @@ function renderFilters() {
 }
 
 // ===== 渲染卡片 =====
+function cardHTML(it) {
+  return `
+    <div class="card${isItemSold(it) ? ' sold' : ''}" data-cat="${it.category}">
+      <span class="cat-tag">${it.major || it.category}</span>
+      <button class="fav-btn" onclick="toggleFav(${it.id})" aria-label="收藏 ${esc(it.title)}" aria-pressed="${isFav(it.id)}">${isFav(it.id) ? '★' : '☆'}</button>
+      <a href="item.html?id=${it.id}" style="text-decoration:none;color:inherit">
+        <div class="thumb" data-cat="${it.category}">${it.img ? `<img src="${it.img}" alt="${esc(it.title)}" decoding="async">` : it.emoji}</div>
+        <div class="info">
+          <p class="title">${it.title}</p>
+          <div class="price">${it.price}</div>
+          <div class="meta">${it.condition} · ${metaPlace(it)} · ${it.time}</div>
+        </div>
+      </a>
+    </div>`;
+}
+
+function renderMoreHint(shownCount, total) {
+  const grid = document.getElementById('grid');
+  grid.querySelectorAll('.load-more').forEach(el => el.remove());
+  if (shownCount < total) {
+    grid.insertAdjacentHTML('beforeend', `<div class="load-more">已显示 ${shownCount} / ${total} 件，继续往下滑加载更多</div>`);
+  } else if (total > PAGE_SIZE) {
+    grid.insertAdjacentHTML('beforeend', `<div class="load-more">已经到底了，共 ${total} 件</div>`);
+  }
+}
+
 function render() {
   const grid = document.getElementById('grid');
   const all = getFiltered();
@@ -203,27 +229,20 @@ function render() {
     return;
   }
 
-  grid.insertAdjacentHTML('beforeend', list.map(it => `
-    <div class="card${isItemSold(it) ? ' sold' : ''}" data-cat="${it.category}">
-      <span class="cat-tag">${it.major || it.category}</span>
-      <button class="fav-btn" onclick="toggleFav(${it.id})" aria-label="收藏 ${esc(it.title)}" aria-pressed="${isFav(it.id)}">${isFav(it.id) ? '★' : '☆'}</button>
-      <a href="item.html?id=${it.id}" style="text-decoration:none;color:inherit">
-        <div class="thumb" data-cat="${it.category}">${it.img ? `<img src="${it.img}" alt="${esc(it.title)}" loading="lazy" decoding="async">` : it.emoji}</div>
-        <div class="info">
-          <p class="title">${it.title}</p>
-          <div class="price">${it.price}</div>
-          <div class="meta">${it.condition} · ${metaPlace(it)} · ${it.time}</div>
-        </div>
-      </a>
-    </div>
-  `).join(''));
+  grid.insertAdjacentHTML('beforeend', list.map(cardHTML).join(''));
+  renderMoreHint(list.length, all.length);
+}
 
-  // 底部提示：还有更多就提示继续滑，到底了就说明一下
-  if (all.length > list.length) {
-    grid.insertAdjacentHTML('beforeend', `<div class="load-more">已显示 ${list.length} / ${all.length} 件，继续往下滑加载更多</div>`);
-  } else if (all.length > PAGE_SIZE) {
-    grid.insertAdjacentHTML('beforeend', `<div class="load-more">已经到底了，共 ${all.length} 件</div>`);
-  }
+// 追加下一批：只往后面加，不重建已有的卡片，图片不会重新下载
+function loadMore() {
+  const all = getFiltered();
+  if (state.shown >= all.length) return;
+  const grid = document.getElementById('grid');
+  const more = all.slice(state.shown, state.shown + PAGE_SIZE);
+  grid.querySelectorAll('.load-more').forEach(el => el.remove());
+  grid.insertAdjacentHTML('beforeend', more.map(cardHTML).join(''));
+  state.shown += more.length;
+  renderMoreHint(state.shown, all.length);
 }
 
 // 换条件时回到第一屏
@@ -315,13 +334,12 @@ document.addEventListener('DOMContentLoaded', () => {
     resetAndRender();
   });
 
-  // 快滑到底时追加下一批（无限滚动）
+  // 快滑到底时追加下一批（只追加，不重建已渲染的卡片）
   window.addEventListener('scroll', () => {
     if (state.shown >= getFiltered().length) return;
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;
     if (!nearBottom) return;
-    state.shown += PAGE_SIZE;
-    render();
+    loadMore();
   }, { passive: true });
 
   renderSide();
