@@ -46,7 +46,7 @@ function render() {
         <div class="tags">
           <span>${it.category}</span>
           <span>${it.condition}</span>
-          ${it.status === 'sold' ? '<span class="sold-badge">已售出</span>' : ''}
+          ${isItemSold(it) ? '<span class="sold-badge">已售出</span>' : ''}
         </div>
         <p class="desc">${it.desc}</p>
         <ul class="seller">
@@ -55,12 +55,58 @@ function render() {
           <li>发布时间：${it.time}</li>
           <li>已浏览 ${viewCount} 次</li>
         </ul>
-        <button class="fav-btn-big" onclick="toggleFav(${it.id})">
-          ${isFav(it.id) ? '★ 已收藏' : '☆ 收藏'}
-        </button>
+        <div class="detail-actions">
+          <button class="fav-btn-big" onclick="toggleFav(${it.id})">
+            ${isFav(it.id) ? '★ 已收藏' : '☆ 收藏'}
+          </button>
+          ${isItemSold(it)
+            ? '<button class="buy-btn buy-btn--done" disabled>已售出</button>'
+            : `<button class="buy-btn" onclick="openPay()">立即购买 ¥${it.price}</button>`}
+        </div>
       </div>
     </div>
   `;
+}
+
+// ===== 模拟支付 =====
+function openPay() {
+  if (!current) return;
+  document.getElementById('payTitle').textContent = current.title;
+  document.getElementById('payPrice').textContent = '¥' + current.price;
+  document.getElementById('payPlace').textContent = current.location || '—';
+  document.getElementById('payMask').hidden = false;
+}
+
+function closePay() {
+  document.getElementById('payMask').hidden = true;
+}
+
+function showToast(text) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = text;
+  t.hidden = false;
+  setTimeout(() => { t.hidden = true; }, 2200);
+}
+
+function doPay() {
+  if (!current) return;
+  const orders = getOrders();
+  orders.unshift({
+    itemId: current.id,
+    title: current.title,
+    price: current.price,
+    place: current.location || '',
+    seller: current.seller || '',
+    buyer: '演示账户',
+    time: new Date().toLocaleString('zh-CN', { hour12: false }),
+    status: 'paid'
+  });
+  saveOrders(orders);
+  markSold(current.id);
+  closePay();
+  showToast('支付成功，订单已生成');
+  setTimeout(() => { location.reload(); }, 800);
 }
 
 // ===== 同类推荐 =====
